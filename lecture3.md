@@ -35,19 +35,13 @@
 *   **Intrinsic (in-vitro) Evaluation:** Directly measure language model performance at predicting words.
 * The test set should reflect the task language we want to use the model for. Don’t want training or test data from the same domain/author/language.
 
-*   **Perplexity:** The Inverse Probability of the test set, normalized by the number of words
-* Reducing the error rate for an application o en involves two antagonistic e orts:
-• Increasing accuracy or precision (minimizing false positives)
-• Increasing coverage or recall (minimizing false negatives).
-
-*   Better than raw probability.
-*   Normalized per-word metric.
-*   Properties:
-    *  Lower perplexity = better model (better prediction).
-    * Range is \[1, ∞]
-    * Captures how well the model predicts unseen data.
-* Weighted average branching factor of a language.
-    *   A lower perplexity means that the vocabulary is more predictable.
+ **What is perplexity?**  
+   - It is the inverse probability of the test set, normalized by the number of words.  
+   - Formula: `Perplexity = P(W)^(-1/N)`, where `N` is the number of words.  
+   - **Properties:**  
+     - Lower perplexity = better model.  
+     - Range: [1, ∞].  
+     - Captures how well the model predicts unseen data.
 
 *   **Addressing Overfitting and Zeros:**
     *   N-gram models can overfit if the test corpus is too similar to the training corpus.
