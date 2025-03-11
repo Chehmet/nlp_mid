@@ -1,7 +1,5 @@
 ## NLP Midterm Prep: Key Concepts and Important Information
 
-Here's a summarized version of the NLP lecture and lab notes, focusing on the most crucial information for your midterm:
-
 **I. Introduction to NLP**
 
 *   **Definition:** A subfield of AI combining linguistics, computer science, and machine learning to enable computers to understand and process human language.
