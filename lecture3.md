@@ -101,3 +101,30 @@ features in the classifiers
     *   Loss function?
     *   How to Train?
 
+Прикольные вопросы:
+
+1. **Why use neural networks for language modeling?**  
+   - They can capture generalizations better than N-grams.  
+   - Useful for hard tasks where machine learning classifiers are needed.
+
+2. **What is the role of regular expressions in NLP?**  
+   - Used for pre-processing or as features in classifiers.  
+   - Sophisticated sequences of regular expressions are often the first model for text processing tasks.
+
+3. **What are the key components of a neural language model?**  
+   - **Architecture:** Feedforward Neural Networks (FFNN) or more advanced architectures like RNNs, LSTMs, or Transformers.  
+   - **Embeddings:** Represent words as dense vectors to capture semantic relationships.  
+   - **Loss Function:** Typically cross-entropy loss to measure prediction accuracy.  
+   - **Training:** Use backpropagation and gradient descent to optimize the model.
+
+4. **How are embeddings used in neural language models?**  
+   - Words are mapped to dense vectors (embeddings) that capture semantic and syntactic information.  
+   - These embeddings are learned during training and help the model generalize better.
+
+5. **What is the loss function in neural language modeling?**  
+   - **Cross-Entropy Loss:** Measures the difference between the predicted probability distribution and the true distribution of the next word.
+
+6. **How to train a neural language model?**  
+   - Use backpropagation to compute gradients of the loss with respect to model parameters.  
+   - Update parameters using gradient descent or its variants (e.g., Adam).  
+   - Train on large text corpora to learn word probabilities and relationships.
