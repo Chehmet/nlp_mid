@@ -61,6 +61,7 @@
 9. **Entity Linking** — связывание упомянутых в тексте сущностей с базой знаний (например, "Пушкин" → ссылка на статью в Википедии).
 
 </details>
+
 **III. Tokenization, Lemmatization, and Stemming**
 
 *   **Text Normalization:** Required for most NLP tasks.  Includes tokenization, format normalization, sentence segmentation.
