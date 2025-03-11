@@ -64,9 +64,11 @@
     *   Replace rare words with `<UNK>` in the training data and estimate its probabilities like a normal word.
     *   At decoding time, use UNK probabilities for any word not in the training data
 Regular Expressions: Recap
-Regular expressions
+Regular expressions:
+
 (1)A formal language for specifying text strings
 (2)How can we search for any of these?
+
 • woodchuck
 • woodchucks
 • Woodchuck
@@ -74,18 +76,18 @@ Regular expressions
 
 **V. From N-grams to Neural Networks**
 
-* Can be very useful in capturing generaliza7ons
+* Can be very useful in capturing generalizations
 * Used for pre-processing, or as features in the classifiers
 * For hard tasks, machine learning classifiers are used
 
 *   Why Regular expressions?
-    *   Sophis7cated sequences of regular expressions are o[en the first model for any text processing text
+    *   Sophisticated sequences of regular expressions are o[en the first model for any text processing text
 
 *   **Neural Networks in Language Modeling**
     *   FFNN Language Modeling (Original paper by Y. Bengio et al.)
 *For hard tasks, we use machine learning
 classifiers
-But regular expressions are s7ill
+But regular expressions are still
 used for pre-processing, or as
 features in the classifiers
 
