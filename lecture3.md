@@ -53,6 +53,7 @@
 **IV. Smoothing Techniques**
 
 *   **Issue:** In any real-world dataset, many N-grams will not be observed in the training data, resulting in zero probabilities.
+  
    **What is Laplace (Add-one) Smoothing?**  
       - Add 1 to every count (seen and unseen N-grams).  
       - Formula: `P(wi | wi-1) = (c(wi-1, wi) + 1) / (c(wi-1) + V)`, where `V` is the vocabulary size.  
