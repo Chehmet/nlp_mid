@@ -1,41 +1,45 @@
+### **I. Language Modeling**
+1. **What is the goal of a language model?**  
+   The goal is to compute the probability of a sequence of words (sentence) `P(W) = P(w1, w2, ..., wn)` or the probability of the next word given the previous words `P(wi | w1, w2, ..., wi-1)`.
 
-**I. Language Modeling**
+2. **How is the probability of a sequence computed?**  
+   Using the **Chain Rule of Probability**:  
+   `P(w1, w2, ..., wn) = P(w1) * P(w2 | w1) * P(w3 | w1, w2) * ... * P(wn | w1, w2, ..., wn-1)`.
 
-*   **Definition:** Assigning probabilities to sequences of words (sentences).  This is a critical part of many NLP applications.
-*   **Applications:**
-    *   Machine Translation (choosing the more likely sentence)
-    *   Spell Correction (identifying more likely word sequences)
-    *   Speech Recognition (choosing the more probable interpretation)
-    *   Summarization, question answering, etc.
-*   **Goal:** Compute `P(W) = P(w1, w2, w3, w4, w5...wn)`
-    *   or, probability of the next word: `P(w5 | w1, w2, w3, w4)`
-*   **How to Compute P(W): The Chain Rule of Probability**
+3. **What are the applications of language modeling?**  
+   - Machine Translation  
+   - Spell Correction  
+   - Speech Recognition  
+   - Summarization  
+   - Question Answering  
 
-    *   `P(w1, w2, ..., wn) = P(w1) * P(w2 | w1) * P(w3 | w1, w2) * ... * P(wn | w1, w2, ..., wn-1)`
+---
 
-**II. N-Gram Models**
+### **II. N-Gram Models**
+1. **What is the Markov Assumption?**  
+   It simplifies the Chain Rule by assuming that the probability of a word depends only on the previous *n-1* words:  
+   `P(wi | w1, w2, ..., wi-1) ≈ P(wi | wi-n+1, ..., wi-1)`.
 
-*   **Markov Assumption:** Simplify the Chain Rule by assuming that the probability of a word depends only on the preceding *n-1* words.
+2. **What are the types of N-gram models?**  
+   - **Unigram:** Each word is independent: `P(w1, w2, ..., wn) ≈ P(w1) * P(w2) * ... * P(wn)`.  
+   - **Bigram:** Depends on the previous word: `P(wi | wi-1)`.  
+   - **Trigram, 4-grams, etc.:** Depends on the previous 2, 3, or N-1 words.
 
-*   **Formula:** `P(wi | w1 w2 … wi-1) ≈ P(wi | wi-n+1 … wi-1)`
+3. **How are N-gram probabilities estimated?**  
+   Using the **Maximum Likelihood Estimate (MLE)**:  
+   `P(wi | wi-1) = count(wi-1, wi) / count(wi-1)`.
 
-*   **Types:**
+4. **Why are calculations done in log space?**  
+   To avoid underflow (very small probabilities) and because adding log probabilities is faster than multiplying raw probabilities.
 
-    *   **Unigram:**  `P(w1 w2 … wn) ≈ P(w1) * P(w2) * ... * P(wn)` (each word is independent).
-    *   **Bigram:**  `P(wi | w1 w2 … wi-1) ≈ P(wi | wi-1)` (depends only on the previous word).
-    *   **Trigram, 4-grams,...N-grams:**  Condition on the previous 2, 3, or N-1 words, respectively.
-* **Estimating N-gram Probabilities:**
-     * The Maximum Likelihood Estimate `P(wi|wi-1)=count(wi-1, wi) / count(wi-1)`
+---
 
-*   **Practical issues:** Calculations are done in log space to avoid underflow, adding is faster than multiplying.
+### **III. Evaluation of Language Models**
+1. **What is the difference between extrinsic and intrinsic evaluation?**  
+   - **Extrinsic:** Measures performance in a real-world task (e.g., machine translation, speech recognition).  
+   - **Intrinsic:** Directly measures how well the model predicts words (e.g., perplexity).
 
-**III. Evaluation of Language Models**
-
-*   **Extrinsic (in-vivo) Evaluation:** Measure model performance in a real-world task (e.g., MT, speech recognition) and compare accuracy/performance.
-*   **Intrinsic (in-vitro) Evaluation:** Directly measure language model performance at predicting words.
-* The test set should reflect the task language we want to use the model for. Don’t want training or test data from the same domain/author/language.
-
- **What is perplexity?**  
+2. **What is perplexity?**  
    - It is the inverse probability of the test set, normalized by the number of words.  
    - Formula: `Perplexity = P(W)^(-1/N)`, where `N` is the number of words.  
    - **Properties:**  
@@ -43,62 +47,31 @@
      - Range: [1, ∞].  
      - Captures how well the model predicts unseen data.
 
-*   **Addressing Overfitting and Zeros:**
-    *   N-gram models can overfit if the test corpus is too similar to the training corpus.
-    *   "Training on the test set" is a bad practice (falsely high probability).
-    *   Dealing with Zeros: Assign probability 0 to unseen n-grams is unrealistic
+3. **What is the issue with overfitting in N-gram models?**  
+   - Overfitting occurs when the test corpus is too similar to the training corpus, leading to falsely high probabilities.  
+   - **Solution:** Use a separate **dev set** to tune hyperparameters and prevent overfitting.
 
-    *   **Dev Sets:**  Separate dataset used to tune hyperparameters and prevent overfitting to the test set.
+4. **How to handle unseen N-grams (zeros)?**  
+   - Use **smoothing techniques** (e.g., Laplace smoothing) to assign small probabilities to unseen N-grams.
 
-**IV. Smoothing Techniques**
+---
 
-*   **Issue:** In any real-world dataset, many N-grams will not be observed in the training data, resulting in zero probabilities.
-  
-   **What is Laplace (Add-one) Smoothing?**  
-      - Add 1 to every count (seen and unseen N-grams).  
-      - Formula: `P(wi | wi-1) = (c(wi-1, wi) + 1) / (c(wi-1) + V)`, where `V` is the vocabulary size.  
-      - **Limitation:** It is a blunt instrument and not often used for N-grams.
+### **IV. Smoothing Techniques**
+1. **What is the issue with zero probabilities in N-gram models?**  
+   Many N-grams in real-world datasets are unseen in training, leading to zero probabilities, which is unrealistic.
 
-*   **Unknown Words (OOV):**
-    *   Create a special `<UNK>` token to represent words not in the training vocabulary.
-    *   Replace rare words with `<UNK>` in the training data and estimate its probabilities like a normal word.
-    *   At decoding time, use UNK probabilities for any word not in the training data
-Regular Expressions: Recap
-Regular expressions:
+2. **What is Laplace (Add-one) Smoothing?**  
+   - Add 1 to every count (seen and unseen N-grams).  
+   - Formula: `P(wi | wi-1) = (c(wi-1, wi) + 1) / (c(wi-1) + V)`, where `V` is the vocabulary size.  
+   - **Limitation:** It is a blunt instrument and not often used for N-grams.
 
-(1)A formal language for specifying text strings
-(2)How can we search for any of these?
+3. **How to handle unknown words (OOV)?**  
+   - Replace rare words in the training data with a special `<UNK>` token.  
+   - Estimate probabilities for `<UNK>` like a normal word and use it for unseen words during decoding.
 
-• woodchuck
-• woodchucks
-• Woodchuck
-• Woodchucks
+---
 
-**V. From N-grams to Neural Networks**
-
-* Can be very useful in capturing generalizations
-* Used for pre-processing, or as features in the classifiers
-* For hard tasks, machine learning classifiers are used
-
-*   Why Regular expressions?
-    *   Sophisticated sequences of regular expressions are o[en the first model for any text processing text
-
-*   **Neural Networks in Language Modeling**
-    *   FFNN Language Modeling (Original paper by Y. Bengio et al.)
-*For hard tasks, we use machine learning
-classifiers
-But regular expressions are still
-used for pre-processing, or as
-features in the classifiers
-
-*   **Given a problem setup answer qustions from slides:**
-    *   What is the architecture?
-    *   How to use Embeddings?
-    *   Loss function?
-    *   How to Train?
-
-Прикольные вопросы:
-
+### **V. From N-grams to Neural Networks**
 1. **Why use neural networks for language modeling?**  
    - They can capture generalizations better than N-grams.  
    - Useful for hard tasks where machine learning classifiers are needed.
