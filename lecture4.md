@@ -82,16 +82,49 @@ Penn Treebank (45 tags) is most often used for supervised learning
     *   Finds the state path through the HMM which assigns maximum likelihood to the observation sequence.
 * Time and Memory: O(NM)
 
-**V. Conditional Random Fields (CRF)**
-CRF is a probabilistic framework for labeling sequence data. Unlike Hidden Markov Models (HMMs) that are generative models, CRFs are discriminative models. This means CRFs model the conditional probability of labels given the observations, $P(Y|X)$, rather than modeling the joint probability, $P(Y, X)$.
+### **V. Условные случайные поля (CRF)**
 
-*   **Features:** The score for a state sequence is given by a sum of feature functions and weights:
+**Определение:**  
+CRF (Conditional Random Fields) — это вероятностная модель для разметки последовательностей данных. В отличие от скрытых марковских моделей (HMM), которые являются **генеративными моделями**, CRF — это **дискриминативные модели**. Это означает, что CRF моделируют условную вероятность меток \( P(Y|X) \) при заданных наблюдениях \( X \), а не совместную вероятность \( P(Y, X) \).
 
-    * K Fk(X,Y) =
-    * 
-∑ i=1 fk(yi−1, yi, X, i)
-- X represents the entire input sentence (observation sequence).
-- Y represents the sequence of labels (POS tags).
-- fk(yi−1, yi, X, i) is a feature function that depends on the current label yi , the previous label yi−1, the entire input sentence X, and the position i in the sentence.
-*   **Key Advantage:** CRFs are discriminative, allowing more flexible feature design and overcoming the conditional independence assumptions made by HMMs.
+---
 
+### **Формула CRF**
+
+Оценка последовательности меток \( Y \) для заданной последовательности наблюдений \( X \) выражается через сумму **функций признаков** и их **весов**:
+
+\[
+P(Y|X) = \frac{1}{Z(X)} \exp\left( \sum_{i=1}^{n} \sum_{k=1}^{K} \lambda_k f_k(y_{i-1}, y_i, X, i) \right)
+\]
+
+Где:
+- \( X \) — входная последовательность (например, предложение).
+- \( Y \) — последовательность меток (например, POS-теги).
+- \( f_k(y_{i-1}, y_i, X, i) \) — функция признака, которая зависит от:
+  - текущей метки \( y_i \),
+  - предыдущей метки \( y_{i-1} \),
+  - всей входной последовательности \( X \),
+  - позиции \( i \) в последовательности.
+- \( \lambda_k \) — вес, связанный с \( k \)-й функцией признака.
+- \( Z(X) \) — нормирующая константа (функция разделения), которая обеспечивает, чтобы сумма вероятностей по всем возможным последовательностям \( Y \) равнялась 1:
+  \[
+  Z(X) = \sum_{Y'} \exp\left( \sum_{i=1}^{n} \sum_{k=1}^{K} \lambda_k f_k(y'_{i-1}, y'_i, X, i) \right)
+  \]
+
+---
+
+### **Ключевые особенности CRF**
+
+1. **Дискриминативность:**  
+   CRF напрямую моделируют \( P(Y|X) \), что позволяет использовать более сложные и гибкие функции признаков, чем в HMM.
+
+2. **Функции признаков:**  
+   Функции \( f_k(y_{i-1}, y_i, X, i) \) могут учитывать:
+   - Текущее слово и его контекст.
+   - Предыдущие и следующие метки.
+   - Морфологические особенности слов (например, суффиксы, префиксы).
+   - Любые другие лингвистические или контекстуальные признаки.
+
+3. **Преимущество перед HMM:**  
+   - CRF не требуют предположения о **условной независимости** (как в HMM), что позволяет учитывать более сложные зависимости между наблюдениями и метками.
+   - CRF могут использовать глобальные признаки (например, всю последовательность \( X \)), что делает их более мощными для задач последовательностной разметки.
